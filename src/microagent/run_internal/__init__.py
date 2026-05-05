@@ -1,0 +1,1 @@
+"""Internal runner plumbing — not part of the public API."""
