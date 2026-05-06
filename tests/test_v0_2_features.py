@@ -373,18 +373,4 @@ def test_nest_handoff_history() -> None:
 
 
 if __name__ == "__main__":
-    # Run tests manually if needed
-    asyncio.run(test_streaming_basic())
-    asyncio.run(test_runstate_creation_and_resume())
-    test_runstate_resume_sync()
-    asyncio.run(test_runstate_resume_async())
-    test_prompt_cache_key_generation()
-    test_cache_key_hierarchy()
-    test_select_best_cache_key()
-    asyncio.run(test_tool_execution_with_concurrency())
-    asyncio.run(test_streaming_queue_operations())
-    asyncio.run(test_runstate_approve_reject())
-    test_runstate_json_serialization()
-    asyncio.run(test_tool_execution_with_timeouts())
-    test_nest_handoff_history()
-    print("All tests passed!")
+    pytest.main([__file__, "-v"])

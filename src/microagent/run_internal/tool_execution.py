@@ -40,9 +40,18 @@ async def execute_function_tool_calls(
     # Create execution coroutines guarded by a concurrency semaphore.
     semaphore = asyncio.Semaphore(max_concurrency)
 
-    async def _run_guarded(coro: Any) -> RunItem:
+    async def _run_guarded(tool: FunctionTool, call_id: str, args_json: str) -> RunItem:
         async with semaphore:
-            return await coro
+            return await _execute_single_tool(
+                tool=tool,
+                call_id=call_id,
+                args_json=args_json,
+                context_wrapper=context_wrapper,
+                agent=agent,
+                timeout=timeout,
+                input_guardrails=input_guardrails,
+                output_guardrails=output_guardrails,
+            )
 
     coros: list[Any] = []
     for item in tool_call_items:
@@ -60,16 +69,9 @@ async def execute_function_tool_calls(
 
         coros.append(
             _run_guarded(
-                _execute_single_tool(
-                    tool=tool,
-                    call_id=call_id,
-                    args_json=args_json,
-                    context_wrapper=context_wrapper,
-                    agent=agent,
-                    timeout=timeout,
-                    input_guardrails=input_guardrails,
-                    output_guardrails=output_guardrails,
-                )
+                tool=tool,
+                call_id=call_id,
+                args_json=args_json,
             )
         )
 

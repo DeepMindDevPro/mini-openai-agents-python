@@ -6,7 +6,7 @@ import asyncio
 import json
 from typing import Any, AsyncIterator, Dict, List, Optional, Union
 
-from src.microagent.models.interface import Model, ModelTracing
+from microagent.models.interface import Model, ModelTracing
 from microagent.items import TResponseInputItem
 from microagent.agent_output import AgentOutputSchemaBase
 from microagent.handoffs import Handoff
